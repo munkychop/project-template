@@ -4,7 +4,7 @@ module.exports =  function (grunt, sharedConfig) {
 
     var _srcDir = sharedConfig.srcDir + 'scss/';
     var _distDir = sharedConfig.distDir + 'css/';
-    var _tmpDir = sharedConfig.tmpDir;
+    // var _tmpDir = sharedConfig.tmpDir;
     var _srcFile = 'kickoff.scss';
     var _distFile = 'kickoff.css';
     var _styleGuideSrcFile = 'styleguide.scss';

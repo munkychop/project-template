@@ -1,1 +1,1 @@
-require("./modules/japanese");
+require("./modules/module-a");
