@@ -11,17 +11,18 @@ module.exports =  function (grunt, sharedConfig) {
     var _shimsDir = _srcDir + 'helpers/';
     var _shimsFile = 'shims.js';
 
-    return {
-        browserify: {
+    var _tasks = {
 
-            dev : {
-                src: [_srcDir + _srcFile],
-                dest: _distDir + _distFile,
+        browserify : {
+
+            dev: {
+                src : [_srcDir + _srcFile],
+                dest : _distDir + _distFile,
                 options : {
-                    alias: _alias.map(grunt, {
-                        cwd: _srcDir,
-                        src: ['**/*.js'],
-                        dest: ''
+                    alias : _alias.map(grunt, {
+                        cwd : _srcDir,
+                        src : ['**/*.js'],
+                        dest : ''
                     }),
                     browserifyOptions : {
                         debug: true
@@ -31,20 +32,35 @@ module.exports =  function (grunt, sharedConfig) {
             }
         },
 
+
         /**
          * Shimly
          * https://github.com/nicbell/shimly
          * Load in a base set of JS shims for use in a project
          */
-        shimly: {
+        shimly : {
             // things you would like to shim (an array of items from the list above)
-            shim: ['Array.forEach', 'Array.filter', 'Array.map', 'Function.bind', 'EventListener'],
+            shim : ['Array.forEach', 'Array.filter', 'Array.map', 'Function.bind', 'EventListener'],
 
             // output location (relative to your grunt.js file location)
-            dest: _shimsDir + _shimsFile,
+            dest : _shimsDir + _shimsFile,
 
             // minify the output (true or false)
-            minify: false
+            minify : false
+        },
+
+        compileJS : {
+            dev : [
+                'browserify:dev'
+            ]
+        }
+    };
+
+    return {
+        tasks : _tasks,
+        config : {
+            srcDir : _srcDir,
+            distDir : _distDir
         }
     };
 };

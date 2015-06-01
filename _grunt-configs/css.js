@@ -11,12 +11,12 @@ module.exports =  function (grunt, sharedConfig) {
     var _styleGuideDistFile = 'styleguide.css';
     var _autoprefixerBrowsers = ['> 5%', 'last 2 versions', 'firefox > 3.6', 'ie > 8'];
 
-    return {
-        sass: {
+    var _tasks = {
+        sass : {
 
             dev : {
-                options: {
-                    outputStyle: 'nested',
+                options : {
+                    outputStyle : 'nested',
                     precision : 10,
                     sourceMap : true
                 },
@@ -26,8 +26,8 @@ module.exports =  function (grunt, sharedConfig) {
             },
 
             dist : {
-                options: {
-                    outputStyle: 'compressed',
+                options : {
+                    outputStyle : 'compressed',
                     precision : 10,
                     sourceMap : false
                 },
@@ -36,9 +36,9 @@ module.exports =  function (grunt, sharedConfig) {
                 // dest : _tmpDir + _distFile
             },
 
-            styleguide: {
-                options: {
-                    outputStyle: 'compressed',
+            styleguide : {
+                options : {
+                    outputStyle : 'compressed',
                     precision : 10
                 },
                 src : _srcDir + _styleGuideSrcFile,
@@ -53,17 +53,17 @@ module.exports =  function (grunt, sharedConfig) {
          * https://github.com/ai/autoprefixer
          * Auto prefixes your CSS using caniuse data
          */
-        autoprefixer: {
-            options: {
-                browsers: _autoprefixerBrowsers,
-                map: true,
+        autoprefixer : {
+            options : {
+                browsers : _autoprefixerBrowsers,
+                map : true,
                 prev : false,
-                inline: false
+                inline : false
             },
 
-            kickoff: {
-                expand: true,
-                flatten: true,
+            kickoff : {
+                expand : true,
+                flatten : true,
                 // src : _tmpDir + '*.css',
                 src : _distDir + '*.css',
                 dest : _distDir
@@ -76,14 +76,49 @@ module.exports =  function (grunt, sharedConfig) {
          * https://github.com/t32k/grunt-csso
          * Minify CSS files with CSSO
          */
-        csso: {
-            dist: {
-                options: {
+        csso : {
+            dist : {
+                options : {
                     restructure: false // turns structural optimisations off as can mess up fallbacks http://bem.info/tools/optimizers/csso/description/
                 },
                 src : _distDir + _distFile,
                 dest : _distDir + _distFile
             }
+        },
+
+        compileCSS : {
+            dev : [
+                'sass:dev',
+                'sass:styleguide',
+                'autoprefixer'
+            ],
+
+            dist : [
+                'sass:dist',
+                'autoprefixer',
+                'csso:dist'
+            ]
+        }
+    };
+
+    // Compile CSS
+    // grunt.registerTask('compileCSS:dev', [
+    //     'sass:dev',
+    //     'sass:styleguide',
+    //     'autoprefixer'
+    // ]);
+
+    // grunt.registerTask('compileCSS:dist', [
+    //     'sass:dist',
+    //     'autoprefixer',
+    //     'csso:dist'
+    // ]);
+
+    return {
+        tasks : _tasks,
+        config : {
+            srcDir : _srcDir,
+            distDir : _distDir
         }
     };
 };

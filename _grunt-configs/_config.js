@@ -10,11 +10,12 @@ module.exports = function (grunt) {
         tmpDir : 'tmp/'
     };
 
-    var _configJS = require('./javascript')(grunt, _sharedConfig);
-    var _configCSS = require('./css')(grunt, _sharedConfig);
-    var _configImages = require('./images')(grunt, _sharedConfig);
+    var _jsTasks = require('./javascript')(grunt, _sharedConfig).tasks;
+    var _cssTasks = require('./css')(grunt, _sharedConfig).tasks;
+    var _imageTasks = require('./images')(grunt, _sharedConfig).tasks;
+    var _watchTasks = require('./watch')(grunt, _sharedConfig).tasks;
     
-    var _mergedConfigs = _.extend(_sharedConfig, _configJS, _configCSS, _configImages);
+    var _mergedTasks = _.extend(_sharedConfig, _jsTasks, _cssTasks, _imageTasks, _watchTasks);
 
-    return _mergedConfigs;
+    return _mergedTasks;
 };

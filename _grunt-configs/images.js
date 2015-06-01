@@ -11,7 +11,7 @@ module.exports =  function (grunt, sharedConfig) {
 	var _grunticonSrcDir = _imageSrcDir + 'icons/';
 	var _grunticonDistDir = _imageDistDir + 'icons/';
 
-	return {
+	var _tasks = {
 		/**
 		 * grunt-contrib-imagemin
 		 * https://github.com/gruntjs/grunt-contrib-imagemin
@@ -59,7 +59,7 @@ module.exports =  function (grunt, sharedConfig) {
 			all: {
 				files: [{
 					expand: true,
-					cwd   : _grunticonSrcDir,
+					cwd   : _grunticonDistDir,
 					src   : ['*.{svg,png,jpg,gif}'],
 					dest  : _grunticonDistDir
 				}],
@@ -70,6 +70,43 @@ module.exports =  function (grunt, sharedConfig) {
 					// }
 				}
 			}
+		},
+
+		compileImages : {
+
+			dev : [
+				'imagemin:images'
+			],
+			
+			// dist : [
+			// 	// 'clean:icons',
+			// 	'imagemin:grunticon',
+			// 	'grunticon'
+			// ]
+		},
+
+		compileIcons : {
+
+			dev : [
+				'imagemin:grunticon',
+				'grunticon'
+			],
+			
+			// dist : [
+			// 	// 'clean:icons',
+			// 	'imagemin:grunticon',
+			// 	'grunticon'
+			// ]
 		}
 	};
+
+	return {
+        tasks : _tasks,
+        config : {
+            srcDir : _imageSrcDir,
+            distDir : _imageDistDir,
+            grunticonSrcDir : _grunticonSrcDir,
+            grunticonDistDir : _grunticonDistDir
+        }
+    };
 };
