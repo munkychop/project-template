@@ -2,9 +2,11 @@
 
 module.exports = function (grunt, sharedConfig) {
 
+    // var _utilities = require('./utilities')(grunt, sharedConfig);
     var _js = require('./javascript')(grunt, sharedConfig);
     var _css = require('./css')(grunt, sharedConfig);
     var _images = require('./images')(grunt, sharedConfig);
+    var _server = require('./server')(grunt, sharedConfig);
 
     /**
     * Watch
@@ -55,16 +57,14 @@ module.exports = function (grunt, sharedConfig) {
                 }
             },
 
-            // assemble : {
-            //     files : ['<%=config.statix.dir%>/src/templates/**/*.{hbs,md}'],
-            //     tasks : [
-            //         'assemble',
-            //         'newer:copy:statix'
-            //     ],
-            //     options: {
-            //         livereload: true
-            //     }
-            // }
+            assemble : {
+                files : [_server.config.statixTemplatesDir + '**/*.{hbs,md}'],
+                tasks : [_server.tasks.compileStatix.dev], //, _utilities.copy.statix],
+
+                options: {
+                    livereload: true
+                }
+            }
         }
     };
 

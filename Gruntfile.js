@@ -10,7 +10,8 @@ module.exports = function (grunt) {
     grunt.initConfig(configs);
 
     // grunt.registerTask('default', ['shimly', 'browserify:dev', 'sass:dev', 'sass:styleguide', 'autoprefixer', 'csso', 'imagemin', 'grunticon', 'watch']);
-    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('default', ['browserSync:serve', 'watch']);
 
-    require('load-grunt-tasks')(grunt);
+    // Load grunt tasks automatically
+    require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'assemble']});
 };

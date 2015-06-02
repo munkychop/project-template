@@ -2,77 +2,106 @@
 
 module.exports = function (grunt, sharedConfig) {
 
-    /**
-     * browserSync
-     * http://www.browsersync.io/docs/options/
-     * http://www.browsersync.io/docs/grunt/
-     */
-    browserSync: {
-        serve: {
-            bsFiles: {
-                src: [
-                    '<%= config.statix.dir%>/dist/assets/**/*.*',
-                    '<%= config.statix.dir%>/dist/**/*.html'
-                ]
+    var _statixDir = 'statix/';
+    var _statixSrcDir = _statixDir + 'src/';
+    var _statixDistDir = _statixDir + 'dist/';
+    var _statixHelpersDir = _statixSrcDir + 'helpers/';
+    var _statixTemplatesDir = _statixSrcDir + 'templates/'; 
+    var _statixPartialsDir = _statixTemplatesDir + 'includes/';
+    var _statixLayoutsDir = _statixTemplatesDir + 'layouts/';
+    var _statixDefaultLayout = 'default.hbs';
+    var _statixPagesDir = _statixTemplatesDir + 'pages/';
+    var _statixStyleGuideDistDir = _statixDistDir + 'styleguide/';
+    var _statixStyleGuideDefaultFile = 'index.html';
+
+    var _tasks = {
+        /**
+         * browserSync
+         * http://www.browsersync.io/docs/options/
+         * http://www.browsersync.io/docs/grunt/
+         */
+        browserSync : {
+            serve : {
+                bsFiles : {
+                    src : [
+                        _statixDistDir + '**/*.*',
+                        '!' + _statixStyleGuideDistDir
+                    ]
+                },
+                options : {
+                    watchTask : true,
+                    server : {
+                        // baseDir: './<%= config.statix.dir%>/dist'
+                        baseDir : _statixDistDir
+                    }
+                }
             },
-            options: {
-                watchTask: true,
-                server: {
-                    baseDir: './<%= config.statix.dir%>/dist'
+
+
+            styleguide : {
+                bsFiles : {
+                    src : [
+                        _statixDistDir + '**/*.*',
+                        // '!' + _statixStyleGuideDistDir
+                    ]
+                },
+                options : {
+                    watchTask : true,
+                    server : {
+                        baseDir : _statixDistDir,
+                        index : _statixStyleGuideDistDir + _statixStyleGuideDefaultFile
+                    }
                 }
             }
         },
 
 
-        styleguide: {
-            bsFiles: {
-                src: [
-                    '<%= config.statix.dir%>/dist/assets/**/*.*',
-                    '<%= config.statix.dir%>/dist/**/*.html'
-                ]
+        /**
+         * Assemble
+         * http://assemble.io/
+         * Static site generator used by Statix
+         * Find out more at https://github.com/tmwagency/statix
+         */
+        assemble : {
+            options : {
+                data : _statixSrcDir + '**/*.{json,yml}',
+                assets : _statixDistDir,
+                helpers : [
+                    // 'helper-moment',
+                    // 'handlebars-helper-eachitems',
+                    // 'handlebars-helper-aggregate',
+                    _statixHelpersDir + 'helper-*.js'
+                ],
+
+                partials : [_statixPartialsDir + '**/*.hbs'],
+                flatten : false,
+
+                layout : _statixDefaultLayout,
+                layoutdir : _statixLayoutsDir
             },
-            options: {
-                watchTask: true,
-                server: {
-                    baseDir: './<%= config.statix.dir%>/dist',
-                    index: 'styleguide/index.html'
-                }
+
+            default : {
+                files : [{
+                    // cwd: './<%= config.statix.dir%>/src/templates/pages/',
+                    cwd : _statixPagesDir,
+                    dest : _statixDistDir,
+                    expand : true,
+                    src : ['**/*.{hbs,md}']
+                }]
             }
-        }
-    },
-
-
-    /**
-     * Assemble
-     * http://assemble.io/
-     * Static site generator used by Statix
-     * Find out more at https://github.com/tmwagency/statix
-     */
-    assemble: {
-        options: {
-            data: '<%= config.statix.dir%>/src/**/*.{json,yml}',
-            assets: '<%= config.statix.distDir%>/assets',
-            helpers: [
-                'helper-moment',
-                'handlebars-helper-eachitems',
-                '<%= config.statix.dir%>/src/helpers/helper-*.js',
-                'handlebars-helper-aggregate'
-            ],
-
-            partials: ['<%= config.statix.dir%>/src/templates/includes/**/*.hbs'],
-            flatten: false,
-
-            layout: 'default.hbs',
-            layoutdir: '<%= config.statix.dir%>/src/templates/layouts'
         },
 
-        default: {
-            files: [{
-                cwd: './<%= config.statix.dir%>/src/templates/pages/',
-                dest: '<%= config.statix.distDir %>',
-                expand: true,
-                src: ['**/*.{hbs,md}']
-            }]
+        compileStatix : {
+            dev : [
+                'assemble'
+            ]
         }
-    }
+    };
+
+    return {
+        tasks : _tasks,
+        config : {
+            statixTemplatesDir : _statixTemplatesDir
+        }
+    };
 };

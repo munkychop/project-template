@@ -14,8 +14,11 @@ module.exports = function (grunt) {
     var _cssTasks = require('./css')(grunt, _sharedConfig).tasks;
     var _imageTasks = require('./images')(grunt, _sharedConfig).tasks;
     var _watchTasks = require('./watch')(grunt, _sharedConfig).tasks;
+    var _serverTasks = require('./server')(grunt, _sharedConfig).tasks;
+
+    // console.log('_serverTasks:', _serverTasks);
     
-    var _mergedTasks = _.extend(_sharedConfig, _jsTasks, _cssTasks, _imageTasks, _watchTasks);
+    var _mergedTasks = _.extend(_sharedConfig, _jsTasks, _cssTasks, _imageTasks, _watchTasks, _serverTasks);
 
     return _mergedTasks;
 };
