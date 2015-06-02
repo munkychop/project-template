@@ -16,7 +16,7 @@ module.exports =  function (grunt, sharedConfig) {
         browserify : {
 
             dev: {
-                src : [_srcDir + _srcFile],
+                src : _srcDir + _srcFile,
                 dest : _distDir + _distFile,
                 options : {
                     alias : _alias.map(grunt, {

@@ -2,7 +2,7 @@
 
 module.exports = function (grunt, sharedConfig) {
 
-    // var _utilities = require('./utilities')(grunt, sharedConfig);
+    var _utilities = require('./utilities')(grunt, sharedConfig);
     var _js = require('./javascript')(grunt, sharedConfig);
     var _css = require('./css')(grunt, sharedConfig);
     var _images = require('./images')(grunt, sharedConfig);
@@ -19,12 +19,12 @@ module.exports = function (grunt, sharedConfig) {
 
             js : {
                 files : [_js.config.srcDir + '**/*.js'],
-                tasks : _js.tasks.compileJS.dev
+                tasks : _js.tasks.compileJS.dev.concat(_utilities.tasks.copyStatix.js)
             },
 
             scss : {
                 files : [_css.config.srcDir + '**/*.scss'],
-                tasks : _css.tasks.compileCSS.dev
+                tasks : _css.tasks.compileCSS.dev.concat(_utilities.tasks.copyStatix.css)
                 // options: {
                 //     interrupt: true,
                 //     spawn: false
@@ -36,7 +36,7 @@ module.exports = function (grunt, sharedConfig) {
                     _images.config.srcDir + '**/*.{svg,png,jpg,gif}',
                     '!' + _images.config.grunticonSrcDir + '**/*' // ignore the grunticon directory
                 ],
-                tasks : _images.tasks.compileImages.dev
+                tasks : _images.tasks.compileImages.dev.concat(_utilities.tasks.copyStatix.img)
                 // options: {
                 //     interrupt: true
                 // }
@@ -44,7 +44,7 @@ module.exports = function (grunt, sharedConfig) {
 
             grunticon : {
                 files : [_images.config.grunticonSrcDir + '**/*.{svg,png,jpg,gif}'],
-                tasks : _images.tasks.compileIcons.dev,
+                tasks : _images.tasks.compileIcons.dev.concat(_utilities.tasks.copyStatix.img),
                 // options: {
                 //     interrupt: true
                 // }
@@ -59,7 +59,7 @@ module.exports = function (grunt, sharedConfig) {
 
             assemble : {
                 files : [_server.config.statixTemplatesDir + '**/*.{hbs,md}'],
-                tasks : [_server.tasks.compileStatix.dev], //, _utilities.copy.statix],
+                tasks : _server.tasks.compileStatix.dev,//.concat(_utilities.tasks.copyStatix.dev),
 
                 options: {
                     livereload: true

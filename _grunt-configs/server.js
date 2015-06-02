@@ -5,6 +5,9 @@ module.exports = function (grunt, sharedConfig) {
     var _statixDir = 'statix/';
     var _statixSrcDir = _statixDir + 'src/';
     var _statixDistDir = _statixDir + 'dist/';
+    var _statixImageDistDir = _statixDistDir + 'img/';
+    var _statixJsDistDir = _statixDistDir + 'js/';
+    var _statixCssDistDir = _statixDistDir + 'css/';
     var _statixHelpersDir = _statixSrcDir + 'helpers/';
     var _statixTemplatesDir = _statixSrcDir + 'templates/'; 
     var _statixPartialsDir = _statixTemplatesDir + 'includes/';
@@ -82,7 +85,6 @@ module.exports = function (grunt, sharedConfig) {
 
             default : {
                 files : [{
-                    // cwd: './<%= config.statix.dir%>/src/templates/pages/',
                     cwd : _statixPagesDir,
                     dest : _statixDistDir,
                     expand : true,
@@ -101,7 +103,11 @@ module.exports = function (grunt, sharedConfig) {
     return {
         tasks : _tasks,
         config : {
-            statixTemplatesDir : _statixTemplatesDir
+            statixTemplatesDir : _statixTemplatesDir,
+            statixDistDir : _statixDistDir,
+            statixImageDistDir : _statixImageDistDir,
+            statixJsDistDir : _statixJsDistDir,
+            statixCssDistDir : _statixCssDistDir
         }
     };
 };
