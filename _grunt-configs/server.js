@@ -17,7 +17,15 @@ module.exports = function (grunt, sharedConfig) {
     var _statixStyleGuideDistDir = _statixDistDir + 'styleguide/';
     var _statixStyleGuideDefaultFile = 'index.html';
 
-    var _tasks = {
+    var _paths = {
+        statixTemplatesDir : _statixTemplatesDir,
+        statixDistDir : _statixDistDir,
+        statixImageDistDir : _statixImageDistDir,
+        statixJsDistDir : _statixJsDistDir,
+        statixCssDistDir : _statixCssDistDir
+    };
+
+    var _config = {
         /**
          * browserSync
          * http://www.browsersync.io/docs/options/
@@ -91,23 +99,26 @@ module.exports = function (grunt, sharedConfig) {
                     src : ['**/*.{hbs,md}']
                 }]
             }
-        },
-
-        compileStatix : {
-            dev : [
-                'assemble'
-            ]
         }
     };
 
+    var _tasks = {
+        compile : {
+            statix : {
+                dev : [
+                    'assemble'
+                ]
+            }
+        },
+        serve : [
+        ]
+    };
+
+    // grunt.registerTask('serve', _tasks.serve);
+
     return {
-        tasks : _tasks,
-        config : {
-            statixTemplatesDir : _statixTemplatesDir,
-            statixDistDir : _statixDistDir,
-            statixImageDistDir : _statixImageDistDir,
-            statixJsDistDir : _statixJsDistDir,
-            statixCssDistDir : _statixCssDistDir
-        }
+        paths : _paths,
+        config : _config,
+        tasks : _tasks
     };
 };

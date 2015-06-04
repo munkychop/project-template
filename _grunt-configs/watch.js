@@ -13,18 +13,18 @@ module.exports = function (grunt, sharedConfig) {
     * https://github.com/gruntjs/grunt-contrib-watch
     * Watches your scss, js etc for changes and compiles them
     */
-    var _tasks = {
+    var _config = {
 
         watch: {
 
             js : {
-                files : [_js.config.srcDir + '**/*.js'],
-                tasks : _js.tasks.compileJS.dev.concat(_utilities.tasks.copyStatix.js)
+                files : [_js.paths.distDir + _js.paths.distFile],
+                tasks : _utilities.tasks.copy.statix.js
             },
 
             scss : {
-                files : [_css.config.srcDir + '**/*.scss'],
-                tasks : _css.tasks.compileCSS.dev.concat(_utilities.tasks.copyStatix.css)
+                files : [_css.paths.srcDir + '**/*.scss'],
+                tasks : _css.tasks.compile.dev.concat(_utilities.tasks.copy.statix.css)
                 // options: {
                 //     interrupt: true,
                 //     spawn: false
@@ -33,18 +33,18 @@ module.exports = function (grunt, sharedConfig) {
 
             images : {
                 files : [
-                    _images.config.srcDir + '**/*.{svg,png,jpg,gif}',
-                    '!' + _images.config.grunticonSrcDir + '**/*' // ignore the grunticon directory
+                    _images.paths.srcDir + '**/*.{svg,png,jpg,gif}',
+                    '!' + _images.paths.grunticonSrcDir + '**/*' // ignore the grunticon directory
                 ],
-                tasks : _images.tasks.compileImages.dev.concat(_utilities.tasks.copyStatix.img)
+                tasks : _images.tasks.compile.images.dev.concat(_utilities.tasks.copy.statix.img)
                 // options: {
                 //     interrupt: true
                 // }
             },
 
             grunticon : {
-                files : [_images.config.grunticonSrcDir + '**/*.{svg,png,jpg,gif}'],
-                tasks : _images.tasks.compileIcons.dev.concat(_utilities.tasks.copyStatix.img),
+                files : [_images.paths.grunticonSrcDir + '**/*.{svg,png,jpg,gif}'],
+                tasks : _images.tasks.compile.icons.dev.concat(_utilities.tasks.copy.statix.img),
                 // options: {
                 //     interrupt: true
                 // }
@@ -58,8 +58,8 @@ module.exports = function (grunt, sharedConfig) {
             },
 
             assemble : {
-                files : [_server.config.statixTemplatesDir + '**/*.{hbs,md}'],
-                tasks : _server.tasks.compileStatix.dev,//.concat(_utilities.tasks.copyStatix.dev),
+                files : [_server.paths.statixTemplatesDir + '**/*.{hbs,md}'],
+                tasks : _server.tasks.compile.statix.dev,//.concat(_utilities.tasks.copy.statix.dev),
 
                 options: {
                     livereload: true
@@ -69,6 +69,6 @@ module.exports = function (grunt, sharedConfig) {
     };
 
     return {
-        tasks : _tasks
+        config : _config
     };
 };

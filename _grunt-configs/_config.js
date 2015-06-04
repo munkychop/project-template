@@ -10,12 +10,12 @@ module.exports = function (grunt) {
         tmpDir : 'tmp/'
     };
 
-    var _jsTasks = require('./javascript')(grunt, _sharedConfig).tasks;
-    var _cssTasks = require('./css')(grunt, _sharedConfig).tasks;
-    var _imageTasks = require('./images')(grunt, _sharedConfig).tasks;
-    var _watchTasks = require('./watch')(grunt, _sharedConfig).tasks;
-    var _serverTasks = require('./server')(grunt, _sharedConfig).tasks;
-    var _utilities = require('./utilities')(grunt, _sharedConfig).tasks;
+    var _jsTasks = require('./javascript')(grunt, _sharedConfig).config;
+    var _cssTasks = require('./css')(grunt, _sharedConfig).config;
+    var _imageTasks = require('./images')(grunt, _sharedConfig).config;
+    var _watchTasks = require('./watch')(grunt, _sharedConfig).config;
+    var _serverTasks = require('./server')(grunt, _sharedConfig).config;
+    var _utilities = require('./utilities')(grunt, _sharedConfig).config;
 
     // console.log('_serverTasks:', _serverTasks);
     

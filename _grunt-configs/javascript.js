@@ -2,7 +2,7 @@
 
 var _alias = require('browserify-alias-grunt');
 
-module.exports =  function (grunt, sharedConfig) {
+module.exports = function (grunt, sharedConfig) {
 
     var _srcDir = sharedConfig.srcDir + 'js/';
     var _distDir = sharedConfig.distDir + 'js/';
@@ -11,7 +11,19 @@ module.exports =  function (grunt, sharedConfig) {
     var _shimsDir = _srcDir + 'helpers/';
     var _shimsFile = 'shims.js';
 
-    var _tasks = {
+    var _browserifyAliasArray = _alias.map(grunt, {
+        cwd : _srcDir,
+        src : ['**/*.js', '!' + _srcFile],
+        dest : ''
+    });
+
+    var _paths = {
+        srcDir : _srcDir,
+        distDir : _distDir,
+        distFile : _distFile
+    };
+
+    var _config = {
 
         browserify : {
 
@@ -19,16 +31,39 @@ module.exports =  function (grunt, sharedConfig) {
                 src : _srcDir + _srcFile,
                 dest : _distDir + _distFile,
                 options : {
-                    alias : _alias.map(grunt, {
-                        cwd : _srcDir,
-                        src : ['**/*.js'],
-                        dest : ''
-                    }),
+                    alias : _browserifyAliasArray,
+
                     browserifyOptions : {
                         debug: true
                     },
-                    watch: true
+
+                    watch: true // use watchify instead of grunt-contrib-watch (much much faster!).
                 }
+            },
+
+            dist: {
+                src : _srcDir + _srcFile,
+                dest : _distDir + _distFile,
+                options : {
+                    alias : _browserifyAliasArray,
+
+                    // transform : ['uglifyify'],
+                    browserifyOptions : {
+                        debug: false
+                    },
+                }
+            }
+        },
+
+        uglify: {
+            options: {
+                compress: {
+                    drop_console: true
+                }
+            },
+            dev: {
+                src : _distDir + _distFile,
+                dest : _distDir + _distFile
             }
         },
 
@@ -47,20 +82,27 @@ module.exports =  function (grunt, sharedConfig) {
 
             // minify the output (true or false)
             minify : false
-        },
+        }
+    };
 
-        compileJS : {
+    var _tasks = {
+        compile : {
             dev : [
-                'browserify:dev'
+                'browserify:dev',
+            ],
+            dist : [
+                'browserify:dist',
+                'uglify'
             ]
         }
     };
 
+    grunt.registerTask('js:dev', _tasks.compile.dev);
+    grunt.registerTask('js:dist', _tasks.compile.dist);
+
     return {
-        tasks : _tasks,
-        config : {
-            srcDir : _srcDir,
-            distDir : _distDir
-        }
+        paths : _paths,
+        config : _config,
+        tasks : _tasks
     };
 };

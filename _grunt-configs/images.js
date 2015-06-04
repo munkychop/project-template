@@ -11,7 +11,15 @@ module.exports =  function (grunt, sharedConfig) {
 	var _grunticonSrcDir = _imageSrcDir + 'icons/';
 	var _grunticonDistDir = _imageDistDir + 'icons/';
 
-	var _tasks = {
+	var _paths = {
+		srcDir : _imageSrcDir,
+        distDir : _imageDistDir,
+        grunticonSrcDir : _grunticonSrcDir,
+        grunticonDistDir : _grunticonDistDir
+	};
+
+	var _config = {
+		
 		/**
 		 * grunt-contrib-imagemin
 		 * https://github.com/gruntjs/grunt-contrib-imagemin
@@ -70,43 +78,49 @@ module.exports =  function (grunt, sharedConfig) {
 					// }
 				}
 			}
-		},
-
-		compileImages : {
-
-			dev : [
-				'imagemin:images'
-			],
-			
-			// dist : [
-			// 	// 'clean:icons',
-			// 	'imagemin:grunticon',
-			// 	'grunticon'
-			// ]
-		},
-
-		compileIcons : {
-
-			dev : [
-				'imagemin:grunticon',
-				'grunticon'
-			],
-			
-			// dist : [
-			// 	// 'clean:icons',
-			// 	'imagemin:grunticon',
-			// 	'grunticon'
-			// ]
 		}
 	};
 
+	var _tasks = {
+		compile : {
+			images : {
+
+				dev : [
+					'imagemin:images'
+				],
+				
+				// dist : [
+				// 	// 'clean:icons',
+				// 	'imagemin:grunticon',
+				// 	'grunticon'
+				// ]
+			},
+
+			icons : {
+
+				dev : [
+					'imagemin:grunticon',
+					'grunticon'
+				],
+				
+				// dist : [
+				// 	// 'clean:icons',
+				// 	'imagemin:grunticon',
+				// 	'grunticon'
+				// ]
+			}
+		}
+	};
+
+	grunt.registerTask('images:dev', _tasks.compile.images.dev);
+	// grunt.registerTask('images:dist', _tasks.compile.images.dist);
+    
+    grunt.registerTask('icons:dev', _tasks.compile.icons.dev);
+    // grunt.registerTask('icons:dist', _tasks.compile.icons.dist);
+
 	return {
-        tasks : _tasks,
-        config : {
-            srcDir : _imageSrcDir,
-            distDir : _imageDistDir,
-            grunticonSrcDir : _grunticonSrcDir,
-            grunticonDistDir : _grunticonDistDir
-        }
+		paths : _paths,
+        config : _config,
+        tasks : _tasks
     };
 };

@@ -1,3 +1,3 @@
-var amazingLib = require("libs/amazing-lib");
+var moduleB = require("modules/module-b");
 
-module.exports = "Module A " + amazingLib;
+module.exports = "Module A " + moduleB;

@@ -10,27 +10,27 @@ module.exports = function (grunt, sharedConfig) {
     var _statixCopyFiles = {
         js : [{
             expand: true,
-            cwd: _javascript.config.distDir,
+            cwd: _javascript.paths.distDir,
             src: ['./**/*.*'],
-            dest: _server.config.statixJsDistDir
+            dest: _server.paths.statixJsDistDir
         }],
 
         css : [{
             expand: true,
-            cwd: _css.config.distDir,
+            cwd: _css.paths.distDir,
             src: ['./**/*.*'],
-            dest: _server.config.statixCssDistDir
+            dest: _server.paths.statixCssDistDir
         }],
 
         img : [{
             expand: true,
-            cwd: _images.config.distDir,
+            cwd: _images.paths.distDir,
             src: ['./**/*.*'],
-            dest: _server.config.statixImageDistDir
+            dest: _server.paths.statixImageDistDir
         }]
     };
 
-    var _tasks = {
+    var _config = {
 
         /**
          * Copy files
@@ -53,19 +53,22 @@ module.exports = function (grunt, sharedConfig) {
             statixImg : {
                 files : _statixCopyFiles.img
             }
-        },
+        }
+    };
 
-        copyStatix : {
-            all : ['copy:statixAll'],
-            js : ['copy:statixJs'],
-            css : ['copy:statixCss'],
-            img : ['copy:statixImg']
+    var _tasks = {
+        copy : {
+            statix : {
+                all : ['copy:statixAll'],
+                js : ['copy:statixJs'],
+                css : ['copy:statixCss'],
+                img : ['copy:statixImg']
+            }
         }
     };
 
     return {
-        tasks : _tasks,
-        // config : {
-        // }
+        config : _config,
+        tasks : _tasks
     };
 };

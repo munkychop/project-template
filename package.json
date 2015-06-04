@@ -10,6 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "assemble": "^0.4.42",
+    "browserify": "^10.2.3",
     "browserify-alias-grunt": "^0.1.0",
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^3.0.1",
@@ -17,6 +18,7 @@
     "grunt-browserify": "^3.8.0",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-imagemin": "^0.9.4",
+    "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-csso": "^0.7.1",
     "grunt-grunticon": "^2.1.6",
@@ -27,6 +29,7 @@
     "imagemin-mozjpeg": "^5.1.0",
     "imagemin-pngquant": "^4.1.0",
     "load-grunt-tasks": "^3.2.0",
+    "uglifyify": "^3.0.1",
     "underscore": "^1.8.3"
   }
 }

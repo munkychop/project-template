@@ -4,14 +4,18 @@ module.exports =  function (grunt, sharedConfig) {
 
     var _srcDir = sharedConfig.srcDir + 'scss/';
     var _distDir = sharedConfig.distDir + 'css/';
-    // var _tmpDir = sharedConfig.tmpDir;
     var _srcFile = 'kickoff.scss';
     var _distFile = 'kickoff.css';
     var _styleGuideSrcFile = 'styleguide.scss';
     var _styleGuideDistFile = 'styleguide.css';
     var _autoprefixerBrowsers = ['> 5%', 'last 2 versions', 'firefox > 3.6', 'ie > 8'];
 
-    var _tasks = {
+    var _paths = {
+        srcDir : _srcDir,
+        distDir : _distDir
+    };
+
+    var _config = {
         sass : {
 
             dev : {
@@ -22,7 +26,6 @@ module.exports =  function (grunt, sharedConfig) {
                 },
                 src : _srcDir + _srcFile,
                 dest : _distDir + _distFile
-                // dest : _tmpDir + _distFile
             },
 
             dist : {
@@ -33,7 +36,6 @@ module.exports =  function (grunt, sharedConfig) {
                 },
                 src : _srcDir + _srcFile,
                 dest : _distDir + _distFile
-                // dest : _tmpDir + _distFile
             },
 
             styleguide : {
@@ -64,7 +66,6 @@ module.exports =  function (grunt, sharedConfig) {
             kickoff : {
                 expand : true,
                 flatten : true,
-                // src : _tmpDir + '*.css',
                 src : _distDir + '*.css',
                 dest : _distDir
             }
@@ -84,9 +85,11 @@ module.exports =  function (grunt, sharedConfig) {
                 src : _distDir + _distFile,
                 dest : _distDir + _distFile
             }
-        },
+        }
+    };
 
-        compileCSS : {
+    var _tasks = {
+        compile : {
             dev : [
                 'sass:dev',
                 'sass:styleguide',
@@ -101,24 +104,12 @@ module.exports =  function (grunt, sharedConfig) {
         }
     };
 
-    // Compile CSS
-    // grunt.registerTask('compileCSS:dev', [
-    //     'sass:dev',
-    //     'sass:styleguide',
-    //     'autoprefixer'
-    // ]);
-
-    // grunt.registerTask('compileCSS:dist', [
-    //     'sass:dist',
-    //     'autoprefixer',
-    //     'csso:dist'
-    // ]);
+    grunt.registerTask('css:dev', _tasks.compile.dev);
+    grunt.registerTask('css:dist', _tasks.compile.dist);
 
     return {
-        tasks : _tasks,
-        config : {
-            srcDir : _srcDir,
-            distDir : _distDir
-        }
+        paths : _paths,
+        config : _config,
+        tasks : _tasks
     };
 };
