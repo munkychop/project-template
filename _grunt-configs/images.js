@@ -32,7 +32,9 @@ module.exports =  function (grunt, sharedConfig) {
 					progressive : true,
 					svgoPlugins: [
 						{ removeViewBox: false },
-						{ removeUselessStrokeAndFill: false }
+						{ removeUselessStrokeAndFill: false },
+						// { cleanupIDs : true },
+						// { removeUnknownsAndDefaults : true}
 					],
 					use: [
 						_mozjpeg(),
@@ -74,7 +76,7 @@ module.exports =  function (grunt, sharedConfig) {
 				options: {
 					// https://github.com/filamentgroup/grunticon#optionscustomselectors
 					// customselectors: {
-					// 	"arrow": [".icon-arrow:before"]
+					// 	'play': ['.someCustomSelector', '.someOtherCustomSelector:after'],
 					// }
 				}
 			}
@@ -89,11 +91,9 @@ module.exports =  function (grunt, sharedConfig) {
 					'imagemin:images'
 				],
 				
-				// dist : [
-				// 	// 'clean:icons',
-				// 	'imagemin:grunticon',
-				// 	'grunticon'
-				// ]
+				dist : [
+					'imagemin:images'
+				]
 			},
 
 			icons : {
@@ -103,20 +103,19 @@ module.exports =  function (grunt, sharedConfig) {
 					'grunticon'
 				],
 				
-				// dist : [
-				// 	// 'clean:icons',
-				// 	'imagemin:grunticon',
-				// 	'grunticon'
-				// ]
+				dist : [
+					'imagemin:grunticon',
+					'grunticon'
+				]
 			}
 		}
 	};
 
 	grunt.registerTask('images:dev', _tasks.compile.images.dev);
-	// grunt.registerTask('images:dist', _tasks.compile.images.dist);
+	grunt.registerTask('images:dist', _tasks.compile.images.dist);
     
     grunt.registerTask('icons:dev', _tasks.compile.icons.dev);
-    // grunt.registerTask('icons:dist', _tasks.compile.icons.dist);
+    grunt.registerTask('icons:dist', _tasks.compile.icons.dist);
 
 	return {
 		paths : _paths,

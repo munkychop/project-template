@@ -53,6 +53,18 @@ module.exports = function (grunt, sharedConfig) {
             statixImg : {
                 files : _statixCopyFiles.img
             }
+        },
+
+        /**
+         * Clean
+         * https://github.com/gruntjs/grunt-contrib-clean
+         * Clean some files
+         */
+        clean: {
+            img : [_images.paths.distDir],
+            dist : [sharedConfig.distDir],
+            statix : [_server.paths.statixDistDir],
+            all: [sharedConfig.distDir, _server.paths.statixDistDir]
         }
     };
 

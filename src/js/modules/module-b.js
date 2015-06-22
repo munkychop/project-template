@@ -1,3 +1,12 @@
-var amazingLib = require("libs/amazing-lib");
+'use strict';
 
-module.exports = "Module B " + amazingLib;
+var amazingLib = require('libs/amazing-lib');
+
+module.exports = {
+    
+    add : function (a, b) {
+        return a + b;
+    },
+    
+    someAmazingLib : amazingLib
+};

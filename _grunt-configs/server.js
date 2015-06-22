@@ -44,7 +44,8 @@ module.exports = function (grunt, sharedConfig) {
                     server : {
                         // baseDir: './<%= config.statix.dir%>/dist'
                         baseDir : _statixDistDir
-                    }
+                    },
+                    notify : false
                 }
             },
 

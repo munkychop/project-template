@@ -7,19 +7,17 @@ module.exports = function (grunt) {
     var _sharedConfig = {
         srcDir : 'src/',
         distDir : 'dist/',
-        tmpDir : 'tmp/'
+        testDir : 'test/'
     };
 
-    var _jsTasks = require('./javascript')(grunt, _sharedConfig).config;
-    var _cssTasks = require('./css')(grunt, _sharedConfig).config;
-    var _imageTasks = require('./images')(grunt, _sharedConfig).config;
-    var _watchTasks = require('./watch')(grunt, _sharedConfig).config;
-    var _serverTasks = require('./server')(grunt, _sharedConfig).config;
+    var _jsConfig = require('./javascript')(grunt, _sharedConfig).config;
+    var _cssConfig = require('./css')(grunt, _sharedConfig).config;
+    var _imageConfig = require('./images')(grunt, _sharedConfig).config;
+    var _watchConfig = require('./watch')(grunt, _sharedConfig).config;
+    var _serverConfig = require('./server')(grunt, _sharedConfig).config;
     var _utilities = require('./utilities')(grunt, _sharedConfig).config;
-
-    // console.log('_serverTasks:', _serverTasks);
     
-    var _mergedTasks = _.extend(_sharedConfig, _jsTasks, _cssTasks, _imageTasks, _watchTasks, _serverTasks, _utilities);
+    var _mergedConfig = _.extend(_sharedConfig, _jsConfig, _cssConfig, _imageConfig, _watchConfig, _serverConfig, _utilities);
 
-    return _mergedTasks;
+    return _mergedConfig;
 };
