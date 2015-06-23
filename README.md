@@ -1,4 +1,4 @@
-# Project Template
+# Project Template – Grunt
 
 A simple starting point for projects, which uses:
 
