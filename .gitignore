@@ -26,7 +26,6 @@ statix/dist
 # General
 #---------------------------------------
 dist/
-tmp/
 **/*.map
 logs
 *.log
