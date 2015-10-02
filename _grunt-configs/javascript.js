@@ -124,8 +124,8 @@ module.exports = function (grunt, sharedConfig) {
          * Load in a base set of JS shims for use in a project
          */
         shimly : {
-            // things you would like to shim (an array of items from the list above)
-            shim : ['Array.forEach', 'Array.filter', 'Array.map', 'Function.bind', 'EventListener'],
+            // things you would like to shim (for a full list, see the shimly readme on Github)
+            shim : ['Array.forEach', 'Array.filter', 'Array.map', 'Function.bind', 'EventListener', 'Element.classList'],
 
             // output location (relative to your grunt.js file location)
             dest : _shimsDir + _shimsFile,
@@ -167,8 +167,8 @@ module.exports = function (grunt, sharedConfig) {
         }
     };
 
-    grunt.registerTask('js:dev', _tasks.compile.dev.concat(_tasks.compile.test));
-    grunt.registerTask('js:dist', _tasks.compile.dist.concat(_tasks.compile.test));
+    grunt.registerTask('js:dev', _tasks.compile.dev.concat(_tasks.compile.test).concat(_tasks.test.all));
+    grunt.registerTask('js:dist', _tasks.compile.dist.concat(_tasks.compile.test).concat(_tasks.test.all));
     grunt.registerTask('js:testAll', _tasks.test.all);
 
     return {

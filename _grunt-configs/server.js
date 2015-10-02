@@ -42,7 +42,6 @@ module.exports = function (grunt, sharedConfig) {
                 options : {
                     watchTask : true,
                     server : {
-                        // baseDir: './<%= config.statix.dir%>/dist'
                         baseDir : _statixDistDir
                     },
                     notify : false
